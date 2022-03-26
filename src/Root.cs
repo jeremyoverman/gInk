@@ -58,6 +58,7 @@ namespace gInk
 		public bool SnapEnabled = true;
 		public bool UndoEnabled = true;
 		public bool ClearEnabled = true;
+		public bool WhiteboardEnabled = true;
 		public bool PanEnabled = true;
 		public bool InkVisibleEnabled = true;
 		public DrawingAttributes[] PenAttr = new DrawingAttributes[MaxPenCount];
@@ -68,6 +69,7 @@ namespace gInk
 		public bool AllowDraggingToolbar = true;
 		public bool AllowHotkeyInPointerMode = true;
 		public int gpButtonsLeft, gpButtonsTop;
+		public Color WhiteboardColor = Color.FromArgb(255, 255, 255);
 
 		// advanced options
 		public string CloseOnSnap = "blankonly";
@@ -85,6 +87,7 @@ namespace gInk
 		public Hotkey Hotkey_Redo = new Hotkey();
 		public Hotkey Hotkey_Snap = new Hotkey();
 		public Hotkey Hotkey_Clear = new Hotkey();
+		public Hotkey Hotkey_Whiteboard = new Hotkey();
 
 		public bool EraserMode = false;
 		public bool Docked = false;
@@ -119,6 +122,7 @@ namespace gInk
 		public int LastPen = 1;
 		public int GlobalPenWidth = 80;
 		public bool gpPenWidthVisible = false;
+		public bool IsWhiteboardOpen = false;
 		public string SnapshotFileFullPath = ""; // used to record the last snapshot file name, to select it when the balloon is clicked
 
 		public Root()
@@ -242,6 +246,19 @@ namespace gInk
 			FormDisplay.ClearCanvus();
 			FormDisplay.DrawButtons(true);
 			FormDisplay.UpdateFormDisplay(true);
+		}
+
+		public void OpenWhiteboard()
+		{
+			IsWhiteboardOpen = !IsWhiteboardOpen;
+
+            FormDisplay.ClearCanvus();
+            FormDisplay.DrawStrokes();
+            FormDisplay.DrawButtons(true);
+            if (Snapping > 0)
+                FormDisplay.DrawSnapping(SnappingRect);
+            FormDisplay.UpdateFormDisplay(true);
+            UponAllDrawingUpdate = false;
 		}
 
 		public void ShowBalloonSnapshot()
@@ -497,6 +514,33 @@ namespace gInk
 					sPara = sLine.Substring(sLine.IndexOf("=") + 1);
 					sPara = sPara.Trim();
 
+					if (sName.StartsWith("WHITEBOARD_COLOR"))
+                    {
+                        int penc = 0;
+                        if (int.TryParse(sPara, out penc))
+                        {
+                            if (sName.EndsWith("_RED") && penc >= 0 && penc <= 255)
+                            {
+                                WhiteboardColor = Color.FromArgb(WhiteboardColor.A, penc, WhiteboardColor.G, WhiteboardColor.B);
+                            }
+
+                            if (sName.EndsWith("_GREEN") && penc >= 0 && penc <= 255)
+                            {
+                                WhiteboardColor = Color.FromArgb(WhiteboardColor.A, WhiteboardColor.R, penc, WhiteboardColor.B);
+                            }
+
+                            if (sName.EndsWith("_BLUE") && penc >= 0 && penc <= 255)
+                            {
+								WhiteboardColor = Color.FromArgb(WhiteboardColor.A, WhiteboardColor.R, WhiteboardColor.G, penc);
+                            }
+
+                            if (sName.EndsWith("_ALPHA") && penc >= 0 && penc <= 255)
+                            {
+								WhiteboardColor = Color.FromArgb(penc, WhiteboardColor.R, WhiteboardColor.G, WhiteboardColor.B);
+                            }
+                        }
+                    }
+
 					if (sName.StartsWith("PEN"))
 					{
 						int penid = 0;
@@ -577,6 +621,9 @@ namespace gInk
 						case "HOTKEY_CLEAR":
 							Hotkey_Clear.Parse(sPara);
 							break;
+						case "HOTKEY_WHITEBOARD":
+							Hotkey_Whiteboard.Parse(sPara);
+							break;
 
 						case "WHITE_TRAY_ICON":
 							if (sPara.ToUpper() == "TRUE" || sPara == "1" || sPara.ToUpper() == "ON")
@@ -626,6 +673,10 @@ namespace gInk
 						case "CLEAR_ICON":
 							if (sPara.ToUpper() == "FALSE" || sPara == "0" || sPara.ToUpper() == "OFF")
 								ClearEnabled = false;
+							break;
+						case "WHITEBOARD_ICON":
+							if (sPara.ToUpper() == "FALSE" || sPara == "0" || sPara.ToUpper() == "OFF")
+								WhiteboardEnabled = false;
 							break;
 						case "PAN_ICON":
 							if (sPara.ToUpper() == "FALSE" || sPara == "0" || sPara.ToUpper() == "OFF")
@@ -704,6 +755,26 @@ namespace gInk
 					sNameO = sLine.Substring(0, sLine.IndexOf("="));
 					sName = sNameO.Trim().ToUpper();
 
+					if (sName.StartsWith("WHITEBOARD_COLOR"))
+					{
+                        if (sName.EndsWith("_RED"))
+                        {
+                            sPara = WhiteboardColor.R.ToString();
+                        }
+                        else if (sName.EndsWith("_GREEN"))
+                        {
+                            sPara = WhiteboardColor.G.ToString();
+                        }
+                        else if (sName.EndsWith("_BLUE"))
+                        {
+                            sPara = WhiteboardColor.B.ToString();
+                        }
+                        else if (sName.EndsWith("_ALPHA"))
+                        {
+                            sPara = WhiteboardColor.A.ToString();
+                        }
+					}
+
 					if (sName.StartsWith("PEN"))
 					{
 						int penid = 0;
@@ -776,6 +847,9 @@ namespace gInk
 						case "HOTKEY_CLEAR":
 							sPara = Hotkey_Clear.ToString();
 							break;
+						case "HOTKEY_WHITEBOARD":
+							sPara = Hotkey_Whiteboard.ToString();
+							break;
 
 						case "WHITE_TRAY_ICON":
 							if (WhiteTrayIcon)
@@ -832,6 +906,12 @@ namespace gInk
 							break;
 						case "CLEAR_ICON":
 							if (ClearEnabled)
+								sPara = "True";
+							else
+								sPara = "False";
+							break;
+						case "WHITEBOARD_ICON":
+							if (WhiteboardEnabled)
 								sPara = "True";
 							else
 								sPara = "False";

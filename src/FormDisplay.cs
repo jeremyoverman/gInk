@@ -114,11 +114,26 @@ namespace gInk
 
 		public void ClearCanvus()
 		{
-			gCanvus.Clear(Color.Transparent);
+			Color color = Color.Transparent;
+
+			if (Root.IsWhiteboardOpen)
+            {
+				color = Root.WhiteboardColor;
+            }
+
+			gCanvus.Clear(color);
 		}
+
 		public void ClearCanvus(Graphics g)
 		{
-			g.Clear(Color.Transparent);
+			Color color = Color.Transparent;
+
+			if (Root.IsWhiteboardOpen)
+            {
+				color = Root.WhiteboardColor;
+            }
+
+			g.Clear(color);
 		}
 
 		public void DrawSnapping(Rectangle rect)

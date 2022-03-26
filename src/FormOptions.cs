@@ -43,6 +43,8 @@ namespace gInk
 				cbUndoEnabled.Checked = true;
 			if (Root.ClearEnabled)
 				cbClearEnabled.Checked = true;
+			if (Root.WhiteboardEnabled)
+				cbWhiteboardEnabled.Checked = true;
 			if (Root.PenWidthEnabled)
 				cbWidthEnabled.Checked = true;
 			if (Root.PanEnabled)
@@ -85,6 +87,9 @@ namespace gInk
 			lbcomboPensWidth.Left = (int)(this.Width / 500.0 * 325);
 			lbcomboPensWidth.Width = 100;
 			lbcomboPensWidth.Top = 15;
+
+			pbWhiteboardColor.BackColor = Color.FromArgb(Root.WhiteboardColor.R, Root.WhiteboardColor.G, Root.WhiteboardColor.B);
+			tbWhiteboardAlpha.Text = Root.WhiteboardColor.A.ToString();
 			
 			tabPage2.Controls.Add(lbcomboPensWidth);
 
@@ -110,6 +115,7 @@ namespace gInk
 				pboxPens[p].Width = 15;
 				pboxPens[p].Height = 15;
 				pboxPens[p].BackColor = Root.PenAttr[p].Color;
+				pboxPens[p].BorderStyle = BorderStyle.FixedSingle;
 				pboxPens[p].Click += pboxPens_Click;
 
 				comboPensAlpha[p] = new ComboBox();
@@ -165,6 +171,7 @@ namespace gInk
 			hiUndo.Hotkey = Root.Hotkey_Undo;
 			hiRedo.Hotkey = Root.Hotkey_Redo;
 			hiClear.Hotkey = Root.Hotkey_Clear;
+			hiWhiteboard.Hotkey = Root.Hotkey_Whiteboard;
 
 			FormOptions_LocalReload();
 		}
@@ -397,7 +404,80 @@ namespace gInk
 			Root.AllowDraggingToolbar = cbAllowDragging.Checked;
 		}
 
-		private void cbAllowHotkeyInPointer_CheckedChanged(object sender, EventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbWhiteboardEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+			Root.WhiteboardEnabled = cbWhiteboardEnabled.Checked;
+        }
+
+        private void lbHkWhiteboard_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void hiWhiteboard_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbHkClear_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void hiClear_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbSnapshotsavepath_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbSnapPath_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pbWhiteboardColor_Click(object sender, EventArgs e)
+        {
+			whiteboardColorDialog.Color = Root.WhiteboardColor;
+            if (whiteboardColorDialog.ShowDialog() == DialogResult.OK)
+            {
+				Root.WhiteboardColor = Color.FromArgb(Root.WhiteboardColor.A, whiteboardColorDialog.Color.R, whiteboardColorDialog.Color.G, whiteboardColorDialog.Color.B);
+                pbWhiteboardColor.BackColor = Color.FromArgb(whiteboardColorDialog.Color.R, whiteboardColorDialog.Color.G, whiteboardColorDialog.Color.B);
+            }
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbWhiteboardAlpha_TextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(tbWhiteboardAlpha.Text, out int alpha))
+            {
+				Root.WhiteboardColor = Color.FromArgb(alpha, Root.WhiteboardColor.R, Root.WhiteboardColor.G, Root.WhiteboardColor.B);
+            }
+        }
+
+        private void cbAllowHotkeyInPointer_CheckedChanged(object sender, EventArgs e)
 		{
 			Root.AllowHotkeyInPointerMode = cbAllowHotkeyInPointer.Checked;
 		}

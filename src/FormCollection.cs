@@ -19,6 +19,7 @@ namespace gInk
 		public Button[] btPen;
 		public Bitmap image_exit, image_clear, image_undo, image_snap, image_penwidth;
 		public Bitmap image_dock, image_dockback;
+		public Bitmap image_whiteboard;
 		public Bitmap image_pencil, image_highlighter, image_pencil_act, image_highlighter_act;
 		public Bitmap image_pointer, image_pointer_act;
 		public Bitmap[] image_pen;
@@ -60,6 +61,9 @@ namespace gInk
 			btClear.Height = (int)(gpButtons.Height * 0.88);
 			btClear.Width = btClear.Height;
 			btClear.Top = (int)(gpButtons.Height * 0.07);
+			btWhiteboard.Height = (int)(gpButtons.Height * 0.88);
+			btWhiteboard.Width = btClear.Height;
+			btWhiteboard.Top = (int)(gpButtons.Height * 0.07);
 			btDock.Height = (int)(gpButtons.Height * 0.88);
 			btDock.Width = (int)(btDock.Height * 0.75);
 			btDock.Top = (int)(gpButtons.Height * 0.07);
@@ -207,6 +211,16 @@ namespace gInk
 			{
 				btClear.Visible = false;
 			}
+			if (Root.WhiteboardEnabled)
+			{
+                btWhiteboard.Visible = true;
+                btWhiteboard.Left = cumulatedleft;
+                cumulatedleft += (int)(btWhiteboard.Width * 1.1);
+			}
+			else
+			{
+				btClear.Visible = false;
+			}
 			cumulatedleft += (int)(btStop.Width * 0.8);
 			btStop.Left = cumulatedleft;
 			gpButtons.Width = btStop.Right + (int)(btStop.Width * 0.5);
@@ -291,6 +305,11 @@ namespace gInk
 			g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 			g.DrawImage(global::gInk.Properties.Resources.garbage, 0, 0, btClear.Width, btClear.Height);
 			btClear.Image = image_clear;
+			image_whiteboard = new Bitmap(btWhiteboard.Width, btWhiteboard.Height);
+			g = Graphics.FromImage(image_whiteboard);
+			g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+			g.DrawImage(global::gInk.Properties.Resources.whiteboard, 0, 0, btWhiteboard.Width, btWhiteboard.Height);
+			btWhiteboard.Image = image_whiteboard;
 			image_undo = new Bitmap(btUndo.Width, btUndo.Height);
 			g = Graphics.FromImage(image_undo);
 			g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
@@ -410,6 +429,7 @@ namespace gInk
 			this.toolTip.SetToolTip(this.btSnap, Root.Local.ButtonNameSnapshot + " (" + Root.Hotkey_Snap.ToString() + ")");
 			this.toolTip.SetToolTip(this.btUndo, Root.Local.ButtonNameUndo + " (" + Root.Hotkey_Undo.ToString() + ")");
 			this.toolTip.SetToolTip(this.btClear, Root.Local.ButtonNameClear + " (" + Root.Hotkey_Clear.ToString() + ")");
+			this.toolTip.SetToolTip(this.btWhiteboard, Root.Local.ButtonNameWhiteboard + " (" + Root.Hotkey_Whiteboard.ToString() + ")");
 			this.toolTip.SetToolTip(this.btStop, Root.Local.ButtonNameExit + " (ESC)");
 		}
 
@@ -886,6 +906,7 @@ namespace gInk
 		bool LastRedoStatus = false;
 		bool LastSnapStatus = false;
 		bool LastClearStatus = false;
+		bool LastWhiteboardStatus = false;
 
 		private void gpPenWidth_MouseDown(object sender, MouseEventArgs e)
 		{
@@ -1199,6 +1220,13 @@ namespace gInk
 				}
 				LastClearStatus = pressed;
 
+				pressed = (GetKeyState(Root.Hotkey_Whiteboard.Key) & 0x8000) == 0x8000;
+				if (pressed && !LastWhiteboardStatus && Root.Hotkey_Whiteboard.ModifierMatch(control, alt, shift, win))
+				{
+					btWhiteboard_Click(null, null);
+				}
+				LastWhiteboardStatus = pressed;
+
 				pressed = (GetKeyState(Root.Hotkey_Snap.Key) & 0x8000) == 0x8000;
 				if (pressed && !LastSnapStatus && Root.Hotkey_Snap.ModifierMatch(control, alt, shift, win))
 				{
@@ -1384,6 +1412,16 @@ namespace gInk
 
 			Root.ClearInk();
 			SaveUndoStrokes();
+		}
+		public void btWhiteboard_Click(object sender, EventArgs e)
+		{
+			if (ToolbarMoved)
+			{
+				ToolbarMoved = false;
+				return;
+			}
+
+			Root.OpenWhiteboard();
 		}
 
 		private void btUndo_Click(object sender, EventArgs e)

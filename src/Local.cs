@@ -23,6 +23,7 @@ namespace gInk
 		public string ButtonNameUndo = "Undo";
 		public string ButtonNameRedo = "Redo";
 		public string ButtonNameClear = "Clear";
+		public string ButtonNameWhiteboard = "Whiteboard";
 		public string ButtonNameExit = "Exit drawing";
 		public string ButtonNameDock = "Dock";
 
