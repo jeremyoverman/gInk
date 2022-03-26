@@ -61,7 +61,7 @@ namespace gInk
 			//this.Width = virwidth;
 			//this.Height = targetbottom - this.Top;
 			this.Width = SystemInformation.VirtualScreen.Width;
-			this.Height = SystemInformation.VirtualScreen.Height - 2;
+			this.Height = SystemInformation.VirtualScreen.Height;
 
 			Bitmap InitCanvus = new Bitmap(this.Width, this.Height);
 			Canvus = InitCanvus.GetHbitmap(Color.FromArgb(0));
@@ -116,7 +116,7 @@ namespace gInk
 		{
 			Color color = Color.Transparent;
 
-			if (Root.IsWhiteboardOpen)
+			if (Root.IsWhiteboardOpen && Root.InkVisible)
             {
 				color = Root.WhiteboardColor;
             }
@@ -128,7 +128,7 @@ namespace gInk
 		{
 			Color color = Color.Transparent;
 
-			if (Root.IsWhiteboardOpen)
+			if (Root.IsWhiteboardOpen && Root.InkVisible)
             {
 				color = Root.WhiteboardColor;
             }

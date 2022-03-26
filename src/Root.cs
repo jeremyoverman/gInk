@@ -80,9 +80,11 @@ namespace gInk
 		public Hotkey Hotkey_Global = new Hotkey();
 		public Hotkey[] Hotkey_Pens = new Hotkey[10];
 		public Hotkey Hotkey_Eraser = new Hotkey();
+		public Hotkey Hotkey_ToggleEraser = new Hotkey();
 		public Hotkey Hotkey_InkVisible = new Hotkey();
 		public Hotkey Hotkey_Pointer = new Hotkey();
 		public Hotkey Hotkey_Pan = new Hotkey();
+		public Hotkey Hotkey_TogglePan = new Hotkey();
 		public Hotkey Hotkey_Undo = new Hotkey();
 		public Hotkey Hotkey_Redo = new Hotkey();
 		public Hotkey Hotkey_Snap = new Hotkey();
@@ -118,8 +120,8 @@ namespace gInk
 		public FormButtonHitter FormButtonHitter;
 		public FormOptions FormOptions;
 
-		public int CurrentPen = 1;  // defaut pen
-		public int LastPen = 1;
+		public int CurrentPen = 0;  // defaut pen
+		public int LastPen = 0;
 		public int GlobalPenWidth = 80;
 		public bool gpPenWidthVisible = false;
 		public bool IsWhiteboardOpen = false;
@@ -600,6 +602,12 @@ namespace gInk
 						case "HOTKEY_ERASER":
 							Hotkey_Eraser.Parse(sPara);
 							break;
+						case "HOTKEY_TOGGLEERASER":
+							Hotkey_ToggleEraser.Parse(sPara);
+							break;
+						case "HOTKEY_TOGGLEPAN":
+							Hotkey_TogglePan.Parse(sPara);
+							break;
 						case "HOTKEY_INKVISIBLE":
 							Hotkey_InkVisible.Parse(sPara);
 							break;
@@ -825,6 +833,12 @@ namespace gInk
 							break;
 						case "HOTKEY_ERASER":
 							sPara = Hotkey_Eraser.ToString();
+							break;
+						case "HOTKEY_TOGGLEERASER":
+							sPara = Hotkey_ToggleEraser.ToString();
+							break;
+						case "HOTKEY_TOGGLEPAN":
+							sPara = Hotkey_TogglePan.ToString();
 							break;
 						case "HOTKEY_INKVISIBLE":
 							sPara = Hotkey_InkVisible.ToString();

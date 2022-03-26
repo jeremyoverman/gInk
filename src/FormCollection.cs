@@ -27,7 +27,7 @@ namespace gInk
 		public Bitmap image_eraser_act, image_eraser;
 		public Bitmap image_pan_act, image_pan;
 		public Bitmap image_visible_not, image_visible;
-		public System.Windows.Forms.Cursor cursorred, cursorsnap;
+		public System.Windows.Forms.Cursor cursorred, cursorsnap, cursoreraser;
 		public System.Windows.Forms.Cursor cursortip;
 
 		public int ButtonsEntering = 0;  // -1 = exiting
@@ -292,6 +292,7 @@ namespace gInk
 			IC.DefaultDrawingAttributes.AntiAliased = true;
 
 			cursorred = new System.Windows.Forms.Cursor(gInk.Properties.Resources.cursorred.Handle);
+			cursoreraser = new System.Windows.Forms.Cursor(gInk.Properties.Resources.cursoreraser.Handle);
 			//IC.Cursor = cursorred;
 			IC.Enabled = true;
 
@@ -700,8 +701,16 @@ namespace gInk
 
 				if (Root.CanvasCursor == 0)
 				{
-					cursorred = new System.Windows.Forms.Cursor(gInk.Properties.Resources.cursorred.Handle);
-					IC.Cursor = cursorred;
+					if (Root.EraserMode)
+                    {
+                        cursoreraser = new System.Windows.Forms.Cursor(gInk.Properties.Resources.cursoreraser.Handle);
+                        IC.Cursor = cursoreraser;
+                    }
+					else
+                    {
+                        cursorred = new System.Windows.Forms.Cursor(gInk.Properties.Resources.cursorred.Handle);
+                        IC.Cursor = cursorred;
+                    }
 				}
 				else if (Root.CanvasCursor == 1)
 					SetPenTipCursor();
@@ -754,6 +763,9 @@ namespace gInk
 					IC.SetWindowInputRectangle(new Rectangle(0, 0, this.Width, this.Height));
 				}
 			}
+			if (Root.CurrentPen >= 0)
+				Root.LastPen = Root.CurrentPen;
+
 			Root.CurrentPen = pen;
 			if (Root.gpPenWidthVisible)
 			{
@@ -763,8 +775,6 @@ namespace gInk
 			else
 				Root.UponButtonsUpdate |= 0x2;
 
-			if (pen != -2)
-				Root.LastPen = pen;
 		}
 
 		public void RetreatAndExit()
@@ -899,9 +909,11 @@ namespace gInk
 		DateTime LastTickTime;
 		bool[] LastPenStatus = new bool[10];
 		bool LastEraserStatus = false;
+		bool LastToggleEraserStatus = false;
 		bool LastVisibleStatus = false;
 		bool LastPointerStatus = false;
 		bool LastPanStatus = false;
+		bool LastTogglePanStatus = false;
 		bool LastUndoStatus = false;
 		bool LastRedoStatus = false;
 		bool LastSnapStatus = false;
@@ -1175,6 +1187,20 @@ namespace gInk
 				}
 				LastEraserStatus = pressed;
 
+				pressed = (GetKeyState(Root.Hotkey_ToggleEraser.Key) & 0x8000) == 0x8000;
+				if (pressed && !LastToggleEraserStatus && Root.Hotkey_ToggleEraser.ModifierMatch(control, alt, shift, win))
+				{
+					if (Root.CurrentPen == -1)
+                    {
+						SelectPen(Root.LastPen);
+                    }
+					else
+                    {
+						SelectPen(-1);
+                    }
+				}
+				LastToggleEraserStatus = pressed;
+
 				pressed = (GetKeyState(Root.Hotkey_InkVisible.Key) & 0x8000) == 0x8000;
 				if (pressed && !LastVisibleStatus && Root.Hotkey_InkVisible.ModifierMatch(control, alt, shift, win))
 				{
@@ -1212,6 +1238,20 @@ namespace gInk
 					SelectPen(-3);
 				}
 				LastPanStatus = pressed;
+
+				pressed = (GetKeyState(Root.Hotkey_TogglePan.Key) & 0x8000) == 0x8000;
+				if (pressed && !LastTogglePanStatus && Root.Hotkey_TogglePan.ModifierMatch(control, alt, shift, win))
+				{
+					if (Root.CurrentPen == -3)
+                    {
+						SelectPen(Root.LastPen);
+                    }
+					else
+                    {
+						SelectPen(-3);
+                    }
+				}
+				LastTogglePanStatus = pressed;
 
 				pressed = (GetKeyState(Root.Hotkey_Clear.Key) & 0x8000) == 0x8000;
 				if (pressed && !LastClearStatus && Root.Hotkey_Clear.ModifierMatch(control, alt, shift, win))

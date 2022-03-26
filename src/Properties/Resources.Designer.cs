@@ -73,6 +73,16 @@ namespace gInk.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        public static System.Drawing.Icon cursoreraser {
+            get {
+                object obj = ResourceManager.GetObject("cursoreraser", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         public static System.Drawing.Icon cursorred {
             get {
                 object obj = ResourceManager.GetObject("cursorred", resourceCulture);

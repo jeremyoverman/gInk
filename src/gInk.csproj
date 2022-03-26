@@ -223,6 +223,7 @@
     <None Include="dockback.png" />
     <None Include="cursorsnap.ico" />
     <None Include="i18n.png" />
+    <None Include="cursoreraser.ico" />
     <Content Include="icon_red.ico" />
     <None Include="icon_white.ico" />
   </ItemGroup>

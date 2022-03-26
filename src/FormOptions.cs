@@ -164,7 +164,9 @@ namespace gInk
 
 			hiGlobal.Hotkey = Root.Hotkey_Global;
 			hiEraser.Hotkey = Root.Hotkey_Eraser;
+			hiToggleEraser.Hotkey = Root.Hotkey_ToggleEraser;
 			hiPan.Hotkey = Root.Hotkey_Pan;
+			hiTogglePan.Hotkey = Root.Hotkey_TogglePan;
 			hiInkVisible.Hotkey = Root.Hotkey_InkVisible;
 			hiPointer.Hotkey = Root.Hotkey_Pointer;
 			hiSnapshot.Hotkey = Root.Hotkey_Snap;
@@ -475,6 +477,21 @@ namespace gInk
             {
 				Root.WhiteboardColor = Color.FromArgb(alpha, Root.WhiteboardColor.R, Root.WhiteboardColor.G, Root.WhiteboardColor.B);
             }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void hotkeyInputBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void cbAllowHotkeyInPointer_CheckedChanged(object sender, EventArgs e)

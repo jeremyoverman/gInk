@@ -29,16 +29,18 @@
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
+            gInk.Hotkey hotkey2 = new gInk.Hotkey();
+            gInk.Hotkey hotkey3 = new gInk.Hotkey();
+            gInk.Hotkey hotkey4 = new gInk.Hotkey();
+            gInk.Hotkey hotkey5 = new gInk.Hotkey();
+            gInk.Hotkey hotkey6 = new gInk.Hotkey();
+            gInk.Hotkey hotkey7 = new gInk.Hotkey();
+            gInk.Hotkey hotkey8 = new gInk.Hotkey();
+            gInk.Hotkey hotkey9 = new gInk.Hotkey();
+            gInk.Hotkey hotkey10 = new gInk.Hotkey();
             gInk.Hotkey hotkey11 = new gInk.Hotkey();
             gInk.Hotkey hotkey12 = new gInk.Hotkey();
-            gInk.Hotkey hotkey13 = new gInk.Hotkey();
-            gInk.Hotkey hotkey14 = new gInk.Hotkey();
-            gInk.Hotkey hotkey15 = new gInk.Hotkey();
-            gInk.Hotkey hotkey16 = new gInk.Hotkey();
-            gInk.Hotkey hotkey17 = new gInk.Hotkey();
-            gInk.Hotkey hotkey18 = new gInk.Hotkey();
-            gInk.Hotkey hotkey19 = new gInk.Hotkey();
-            gInk.Hotkey hotkey20 = new gInk.Hotkey();
+            gInk.Hotkey hotkey1 = new gInk.Hotkey();
             this.cbEraserEnabled = new System.Windows.Forms.CheckBox();
             this.cbPointerEnabled = new System.Windows.Forms.CheckBox();
             this.cbSnapEnabled = new System.Windows.Forms.CheckBox();
@@ -57,6 +59,8 @@
             this.comboCanvasCursor = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbWhiteboardAlpha = new System.Windows.Forms.TextBox();
             this.labelWhiteboardColor = new System.Windows.Forms.Label();
             this.pbWhiteboardColor = new System.Windows.Forms.PictureBox();
             this.cbWhiteboardEnabled = new System.Windows.Forms.CheckBox();
@@ -68,6 +72,8 @@
             this.cbAllowDragging = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.hiToggleEraser = new gInk.HotkeyInputBox();
             this.lbHkWhiteboard = new System.Windows.Forms.Label();
             this.cbAllowHotkeyInPointer = new System.Windows.Forms.CheckBox();
             this.lbHkInkVisible = new System.Windows.Forms.Label();
@@ -79,7 +85,6 @@
             this.lbHkUndo = new System.Windows.Forms.Label();
             this.lbHkEraser = new System.Windows.Forms.Label();
             this.lbGlobalHotkey = new System.Windows.Forms.Label();
-            this.whiteboardColorDialog = new System.Windows.Forms.ColorDialog();
             this.hiWhiteboard = new gInk.HotkeyInputBox();
             this.hiInkVisible = new gInk.HotkeyInputBox();
             this.hiSnapshot = new gInk.HotkeyInputBox();
@@ -90,8 +95,9 @@
             this.hiUndo = new gInk.HotkeyInputBox();
             this.hiEraser = new gInk.HotkeyInputBox();
             this.hiGlobal = new gInk.HotkeyInputBox();
-            this.tbWhiteboardAlpha = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.whiteboardColorDialog = new System.Windows.Forms.ColorDialog();
+            this.label3 = new System.Windows.Forms.Label();
+            this.hiTogglePan = new gInk.HotkeyInputBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbWhiteboardColor)).BeginInit();
@@ -284,6 +290,24 @@
             this.tabPage1.Text = "General";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 265);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(130, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Whiteboard Transparency";
+            this.label1.Click += new System.EventHandler(this.label1_Click_1);
+            // 
+            // tbWhiteboardAlpha
+            // 
+            this.tbWhiteboardAlpha.Location = new System.Drawing.Point(177, 262);
+            this.tbWhiteboardAlpha.Name = "tbWhiteboardAlpha";
+            this.tbWhiteboardAlpha.Size = new System.Drawing.Size(100, 20);
+            this.tbWhiteboardAlpha.TabIndex = 12;
+            this.tbWhiteboardAlpha.TextChanged += new System.EventHandler(this.tbWhiteboardAlpha_TextChanged);
+            // 
             // labelWhiteboardColor
             // 
             this.labelWhiteboardColor.AutoSize = true;
@@ -389,6 +413,10 @@
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tabPage3.Controls.Add(this.label3);
+            this.tabPage3.Controls.Add(this.hiTogglePan);
+            this.tabPage3.Controls.Add(this.label2);
+            this.tabPage3.Controls.Add(this.hiToggleEraser);
             this.tabPage3.Controls.Add(this.lbHkWhiteboard);
             this.tabPage3.Controls.Add(this.cbAllowHotkeyInPointer);
             this.tabPage3.Controls.Add(this.lbHkInkVisible);
@@ -415,6 +443,29 @@
             this.tabPage3.Size = new System.Drawing.Size(944, 432);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Hotkeys";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(503, 120);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(73, 13);
+            this.label2.TabIndex = 21;
+            this.label2.Text = "Toggle Eraser";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // hiToggleEraser
+            // 
+            this.hiToggleEraser.BackColor = System.Drawing.Color.White;
+            this.hiToggleEraser.ExternalConflictFlag = false;
+            this.hiToggleEraser.Hotkey = hotkey2;
+            this.hiToggleEraser.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.hiToggleEraser.Location = new System.Drawing.Point(611, 120);
+            this.hiToggleEraser.Name = "hiToggleEraser";
+            this.hiToggleEraser.RequireModifier = false;
+            this.hiToggleEraser.Size = new System.Drawing.Size(120, 20);
+            this.hiToggleEraser.TabIndex = 22;
+            this.hiToggleEraser.Text = "None";
             // 
             // lbHkWhiteboard
             // 
@@ -524,7 +575,7 @@
             // 
             this.hiWhiteboard.BackColor = System.Drawing.Color.White;
             this.hiWhiteboard.ExternalConflictFlag = false;
-            this.hiWhiteboard.Hotkey = hotkey11;
+            this.hiWhiteboard.Hotkey = hotkey3;
             this.hiWhiteboard.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.hiWhiteboard.Location = new System.Drawing.Point(340, 336);
             this.hiWhiteboard.Name = "hiWhiteboard";
@@ -538,7 +589,7 @@
             // 
             this.hiInkVisible.BackColor = System.Drawing.Color.White;
             this.hiInkVisible.ExternalConflictFlag = false;
-            this.hiInkVisible.Hotkey = hotkey12;
+            this.hiInkVisible.Hotkey = hotkey4;
             this.hiInkVisible.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.hiInkVisible.Location = new System.Drawing.Point(340, 202);
             this.hiInkVisible.Name = "hiInkVisible";
@@ -552,7 +603,7 @@
             // 
             this.hiSnapshot.BackColor = System.Drawing.Color.White;
             this.hiSnapshot.ExternalConflictFlag = false;
-            this.hiSnapshot.Hotkey = hotkey13;
+            this.hiSnapshot.Hotkey = hotkey5;
             this.hiSnapshot.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.hiSnapshot.Location = new System.Drawing.Point(340, 229);
             this.hiSnapshot.Name = "hiSnapshot";
@@ -566,7 +617,7 @@
             // 
             this.hiClear.BackColor = System.Drawing.Color.White;
             this.hiClear.ExternalConflictFlag = false;
-            this.hiClear.Hotkey = hotkey14;
+            this.hiClear.Hotkey = hotkey6;
             this.hiClear.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.hiClear.Location = new System.Drawing.Point(340, 310);
             this.hiClear.Name = "hiClear";
@@ -581,7 +632,7 @@
             // 
             this.hiPan.BackColor = System.Drawing.Color.White;
             this.hiPan.ExternalConflictFlag = false;
-            this.hiPan.Hotkey = hotkey15;
+            this.hiPan.Hotkey = hotkey7;
             this.hiPan.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.hiPan.Location = new System.Drawing.Point(340, 147);
             this.hiPan.Name = "hiPan";
@@ -595,7 +646,7 @@
             // 
             this.hiPointer.BackColor = System.Drawing.Color.White;
             this.hiPointer.ExternalConflictFlag = false;
-            this.hiPointer.Hotkey = hotkey16;
+            this.hiPointer.Hotkey = hotkey8;
             this.hiPointer.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.hiPointer.Location = new System.Drawing.Point(340, 175);
             this.hiPointer.Name = "hiPointer";
@@ -610,7 +661,7 @@
             // 
             this.hiRedo.BackColor = System.Drawing.Color.White;
             this.hiRedo.ExternalConflictFlag = false;
-            this.hiRedo.Hotkey = hotkey17;
+            this.hiRedo.Hotkey = hotkey9;
             this.hiRedo.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.hiRedo.Location = new System.Drawing.Point(340, 283);
             this.hiRedo.Name = "hiRedo";
@@ -624,7 +675,7 @@
             // 
             this.hiUndo.BackColor = System.Drawing.Color.White;
             this.hiUndo.ExternalConflictFlag = false;
-            this.hiUndo.Hotkey = hotkey18;
+            this.hiUndo.Hotkey = hotkey10;
             this.hiUndo.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.hiUndo.Location = new System.Drawing.Point(340, 256);
             this.hiUndo.Name = "hiUndo";
@@ -638,7 +689,7 @@
             // 
             this.hiEraser.BackColor = System.Drawing.Color.White;
             this.hiEraser.ExternalConflictFlag = false;
-            this.hiEraser.Hotkey = hotkey19;
+            this.hiEraser.Hotkey = hotkey11;
             this.hiEraser.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.hiEraser.Location = new System.Drawing.Point(340, 120);
             this.hiEraser.Name = "hiEraser";
@@ -652,7 +703,7 @@
             // 
             this.hiGlobal.BackColor = System.Drawing.Color.White;
             this.hiGlobal.ExternalConflictFlag = false;
-            this.hiGlobal.Hotkey = hotkey20;
+            this.hiGlobal.Hotkey = hotkey12;
             this.hiGlobal.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.hiGlobal.Location = new System.Drawing.Point(19, 39);
             this.hiGlobal.Name = "hiGlobal";
@@ -662,30 +713,36 @@
             this.hiGlobal.Text = "None";
             this.hiGlobal.OnHotkeyChanged += new System.EventHandler(this.hi_OnHotkeyChanged);
             // 
-            // tbWhiteboardAlpha
+            // label3
             // 
-            this.tbWhiteboardAlpha.Location = new System.Drawing.Point(177, 262);
-            this.tbWhiteboardAlpha.Name = "tbWhiteboardAlpha";
-            this.tbWhiteboardAlpha.Size = new System.Drawing.Size(100, 20);
-            this.tbWhiteboardAlpha.TabIndex = 12;
-            this.tbWhiteboardAlpha.TextChanged += new System.EventHandler(this.tbWhiteboardAlpha_TextChanged);
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(503, 147);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(62, 13);
+            this.label3.TabIndex = 23;
+            this.label3.Text = "Toggle Pan";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // label1
+            // hiTogglePan
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 265);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 13);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Whiteboard Transparency";
-            this.label1.Click += new System.EventHandler(this.label1_Click_1);
+            this.hiTogglePan.BackColor = System.Drawing.Color.White;
+            this.hiTogglePan.ExternalConflictFlag = false;
+            this.hiTogglePan.Hotkey = hotkey1;
+            this.hiTogglePan.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.hiTogglePan.Location = new System.Drawing.Point(611, 147);
+            this.hiTogglePan.Name = "hiTogglePan";
+            this.hiTogglePan.RequireModifier = false;
+            this.hiTogglePan.Size = new System.Drawing.Size(120, 20);
+            this.hiTogglePan.TabIndex = 24;
+            this.hiTogglePan.Text = "None";
+            this.hiTogglePan.TextChanged += new System.EventHandler(this.hotkeyInputBox1_TextChanged);
             // 
             // FormOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(623, 453);
+            this.ClientSize = new System.Drawing.Size(747, 453);
             this.Controls.Add(this.tabControl1);
             this.MaximizeBox = false;
             this.Name = "FormOptions";
@@ -759,5 +816,9 @@
         private System.Windows.Forms.ColorDialog whiteboardColorDialog;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbWhiteboardAlpha;
+        private System.Windows.Forms.Label label2;
+        private HotkeyInputBox hiToggleEraser;
+        private System.Windows.Forms.Label label3;
+        private HotkeyInputBox hiTogglePan;
     }
 }
